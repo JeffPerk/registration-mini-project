@@ -1,3 +1,7 @@
+<?php
+  require 'connect.php';
+  echo 'Connection established';
+ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,7 +12,7 @@
   <body>
     <div class="form-container">
       <h2>Registration Form</h2>
-      <form action="process.php" method="post">
+      <form action="index.php" method="post">
         <label>Username:</label>
         <input type="text" name="name" placeholder="Enter username" required="required">
 
@@ -16,15 +20,24 @@
         <input type="text" name="email" placeholder="Enter email" required="required">
 
         <label>UserPass:</label>
-        <input type="text" name="pass" placeholder="Enter pass" required="required">
+        <input type="password" name="pass" placeholder="Enter pass" required="required">
 
         <input type="submit" style="border-left-width: 5px;" name="signup" value="Sign Up">
       </form>
     </div>
   </body>
 </html>
-
 <?php
-  include "process.php";
+  $db = new Connection();
+
+  if(isset($_POST['signup'])) {
+    $user = $_POST['name'];
+    $email = $_POST['email'];
+    $pass = $_POST['pass'];
+
+    $query = "INSERT INTO users (user_name, user_email, user_pass) VALUES ('$user', '$email', '$pass')";
+    $run = $db->insert($query);
+  }
+
 
  ?>
